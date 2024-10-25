@@ -7,7 +7,7 @@ import { Album } from '../models/album.model';
   standalone: true,
   imports: [],
   templateUrl: './album.component.html',
-  styleUrl: './album.component.css'
+  styleUrl: './album.component.less'
 })
 export class AlbumComponent implements OnInit {
   albumList: Album[] = [];

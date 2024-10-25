@@ -7,7 +7,7 @@ import { FormsModule } from '@angular/forms';
   standalone: true,
   imports: [RouterOutlet, ListaComponent, FormsModule, RouterLink],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.css'
+  styleUrl: './app.component.less'
 })
 export class AppComponent {
   title = 'ejemplo1';
