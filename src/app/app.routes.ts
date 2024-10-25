@@ -1,20 +1,32 @@
 import { Routes } from '@angular/router';
-import { HomeComponent } from './home/home.component';
-import { AlbumComponent } from './album/album.component';
+import { authGuard } from './auth/auth.guard';
+import { HomeComponent } from './features/home/home.component';
 
 export const routes: Routes = [
-    {
-        path: '',
-        component: HomeComponent,
-        title: 'home'
-    },
-    {
-        path: 'album',
-        component: AlbumComponent,
-        title: 'Album de Items'
-    },
-    {
-        path: '**',
-        redirectTo: '/'
-    },
+  {
+    path: '',
+    component: HomeComponent,
+    canActivate: [authGuard],
+    children: [
+      {
+        path: 'usuarios',
+        loadChildren: () => import('./features/usuario/usuario.routes').then(r => r.USUARIO_ROUTES),
+        title: 'Usuarios'
+      },
+      {
+        path: 'clientes',
+        loadChildren: () => import('./features/cliente/cliente.routes').then(r => r.CLIENTE_ROUTES),
+        title: 'Clientes'
+      }
+    ]
+  },
+  {
+    path: 'login',
+    loadComponent: () => import('./features/auth/login/login.component').then(c => c.LoginComponent),
+    title: 'Iniciar Sesión'
+  },
+  {
+    path: '**',
+    redirectTo: '/'
+  }
 ];
