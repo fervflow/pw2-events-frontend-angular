@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { AuthService } from '../../../auth/auth.service';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { TokenService } from '../../../auth/token.service';
 
 @Component({
   selector: 'app-login',
@@ -19,7 +20,7 @@ export class LoginComponent {
   constructor(
     private fb: FormBuilder,
     private authService: AuthService,
-    private router: Router
+    private router: Router,
   ) {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
@@ -32,7 +33,7 @@ export class LoginComponent {
     return control ? (control.invalid && (control.dirty || control.touched)) : false;
   }
 
-  onSubmit(): void {
+  login(): void {
     if (this.loginForm.valid) {
       this.isLoading = true;
       this.errorMessage = '';

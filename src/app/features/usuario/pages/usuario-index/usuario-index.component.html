@@ -1,4 +1,23 @@
-<div class="container mx-auto p-4">
+<table tuiTable class="table" [columns]="[4]">
+  <thead>
+    <tr tuiThGroup>
+      <th tuiTh [resizable]="true">ID</th>
+      <th tuiTh>Nombre</th>
+      <th tuiTh>Email</th>
+      <th tuiTh>Acciones</th>
+    </tr>
+  </thead>
+  <tbody tuiTbody [data]="usuarios">
+    <tr *ngFor="let usuario of usuarios" tuiTr>
+      <td *tuiCell="'nombre'" tuiTd>
+        {{ usuario.nombre | tuiFormatNumber | async }}
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+
+<!-- <div class="container mx-auto p-4">
   <h1 class="text-2xl font-bold mb-4">Usuarios</h1>
   <button 
     routerLink="create"
@@ -37,4 +56,4 @@
       </tbody>
     </table>
   </div>
-</div>
+</div> -->

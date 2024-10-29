@@ -2,8 +2,8 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable, signal } from '@angular/core';
 import { Router } from '@angular/router';
 import { BehaviorSubject, Observable, tap } from 'rxjs';
-import { BrowserStorageService } from './storage.service';
 import { toObservable } from '@angular/core/rxjs-interop';
+import { TokenService } from './token.service';
 
 @Injectable({
   providedIn: 'root'
@@ -16,9 +16,10 @@ export class AuthService {
   constructor(
     private http: HttpClient,
     private router: Router,
-    private storage: BrowserStorageService
+    // private storage: BrowserStorageService
+    private tokenService: TokenService,
   ) {
-    this.isAuthenticatedSignal.set(!!this.storage.getItem('accessToken'));
+    this.isAuthenticatedSignal.set(!!tokenService.getToken());
   }
 
   isAuthenticated(): boolean {
@@ -26,19 +27,23 @@ export class AuthService {
   }
 
   login(email: string, password: string) {
-    return this.http.post<{accessToken: string}>(this.API_URL+'/login', { email, password })
+    return this.http.post<{access_token: string}>(this.API_URL+'/login', { email, password })
       .pipe(
         tap(response => {
-          this.storage.setItem('accessToken', response.accessToken);
+          this.tokenService.setToken(response.access_token);
           this.isAuthenticatedSignal.set(true);
-          console.log('LOGIN accessToken: ', this.storage.getItem('accessToken'));
+          console.log('LOGIN accessToken: ', this.tokenService.getToken());
         })
       );
   }
 
   logout() {
-    this.storage.removeItem('accessToken');
+    this.tokenService.removeToken();
     this.isAuthenticatedSignal.set(false);
     this.router.navigate(['/login']);
+  }
+
+  getToken(): string | null {
+    return this.tokenService.getToken();
   }
 }

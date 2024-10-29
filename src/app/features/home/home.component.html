@@ -1,3 +1,157 @@
-<main class="container mx-auto p-4">
+<header tuiNavigationHeader style="height: 3rem">
+  <span tuiNavigationLogo>
+    <tui-icon
+      icon="@tui.diamond-percent"
+      [style.height.px]="32"
+      [style.width.px]="32"
+    />
+    <h2>Marketing: Administración de Eventos</h2>
+    <!-- <tui-badge>Test</tui-badge> -->
+  </span>
+
+  <hr />
+
+  <button
+    appearance="secondary-grayscale"
+    iconStart="@tui.plus"
+    tuiButton
+    type="button"
+  >
+    Create
+  </button>
+  <button iconStart="@tui.bell" tuiIconButton type="button">
+    Notifications
+    <tui-badge-notification />
+  </button>
+  <button iconStart="@tui.ellipsis" tuiIconButton type="button">More</button>
+  <tui-avatar src="AI" />
+</header>
+
+<!-- [style.height]="'95dvh'" -->
+<div [style.display]="'flex'" [style.flex]="'1 1 auto'">
+  <aside [tuiNavigationAside]="expanded" [style.display]="'flex'">
+    <header>
+      <button
+        tuiAsideItem
+        type="button"
+        [iconStart]="expanded ? '@tui.chevron-left' : '@tui.chevron-right'"
+        (click)="expanded = !expanded"
+      >
+        {{ expanded ? "Contraer" : "Expandir" }}
+      </button>
+    </header>
+    <div>
+      <a iconStart="@tui.users" tuiAsideItem [routerLink]="['usuarios']">Usuarios</a>
+
+      <a iconStart="@tui.contact-round" tuiAsideItem [routerLink]=""
+        >Clientes</a
+      >
+      <!-- <tui-aside-group>
+        <button
+          automation-id="setting"
+          iconStart="@tui.settings"
+          tuiAsideItem
+          tuiChevron
+          type="button"
+        >
+          Settings
+          <ng-template>
+            <button tuiAsideItem type="button">Account</button>
+            <button tuiAsideItem type="button">Notifications</button>
+            <button tuiAsideItem type="button">Privacy</button>
+          </ng-template>
+        </button>
+      </tui-aside-group> -->
+      <a
+        automation-id="hint"
+        iconStart="@tui.heart"
+        tuiAsideItem
+        [routerLink]=""
+        >Eventos
+      </a>
+      <button
+        iconEnd="@tui.chevron-right"
+        iconStart="@tui.ellipsis"
+        tuiAsideItem
+        tuiDropdownHover
+        tuiDropdownOpen
+        type="button"
+        [tuiDropdown]="more"
+      >
+        More
+        <ng-template #more let-close>
+          <tui-data-list tuiDataListDropdownManager>
+            <button iconStart="@tui.pencil" tuiAsideItem type="button">
+              Write
+            </button>
+            <button
+              iconStart="@tui.pie-chart"
+              tuiAsideItem
+              type="button"
+              [tuiDropdown]="submenu"
+            >
+              Categories
+              <ng-template #submenu>
+                <tui-data-list>
+                  <button tuiAsideItem type="button" (click)="close()">
+                    Fiction (will close menu)
+                  </button>
+                  <button tuiAsideItem type="button">Non-Fiction</button>
+                  <button tuiAsideItem type="button">Children</button>
+                </tui-data-list>
+              </ng-template>
+            </button>
+          </tui-data-list>
+        </ng-template>
+      </button>
+      <hr />
+      <button iconStart="@tui.plus" tuiAsideItem type="button">Add</button>
+    </div>
+  </aside>
+
+  <main
+    tuiNavigationMain
+    [style.display]="'flex'"
+    [style.flex-direction]="'column'"
+    [style.justify-content]="'start'"
+  >
+    <nav tuiNavigationNav [style.position]="'sticky'" [style.height.rem]="3">
+      <tui-badge
+        iconStart="@tui.users"
+        appearance="primary"
+        size="xl"
+      ></tui-badge>
+      <span tuiNavigationLogo>
+        <span tuiFade>Usuarios</span>
+      </span>
+
+      <hr />
+
+      <tui-tabs tuiFade>
+        <button tuiTab type="button">Default view</button>
+        <button tuiTab type="button">Details</button>
+        <button tuiTab type="button">Followers</button>
+      </tui-tabs>
+      <button appearance="secondary" tuiButton type="button" (click)="logout()">Log Out</button>
+      <button tuiButton type="button">Primary</button>
+    </nav>
+    <div>
+      <router-outlet></router-outlet>
+    </div>
+    <div
+      *tuiRepeatTimes="let index of 4"
+      tuiAppearance="floating"
+      tuiCardLarge
+      tuiHeader
+    >
+      <h2 tuiTitle>
+        Some random content
+        <span tuiSubtitle>A subtitle</span>
+      </h2>
+    </div>
+  </main>
+</div>
+
+<!-- <main class="container mx-auto p-4">
   <router-outlet></router-outlet>
-</main>
+</main> -->
