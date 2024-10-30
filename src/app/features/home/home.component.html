@@ -6,25 +6,16 @@
       [style.width.px]="32"
     />
     <h2>Marketing: Administración de Eventos</h2>
-    <!-- <tui-badge>Test</tui-badge> -->
   </span>
 
   <hr />
 
-  <button
-    appearance="secondary-grayscale"
-    iconStart="@tui.plus"
-    tuiButton
-    type="button"
-  >
-    Create
-  </button>
   <button iconStart="@tui.bell" tuiIconButton type="button">
     Notifications
     <tui-badge-notification />
   </button>
   <button iconStart="@tui.ellipsis" tuiIconButton type="button">More</button>
-  <tui-avatar src="AI" />
+  <tui-avatar src="EV" />
 </header>
 
 <!-- [style.height]="'95dvh'" -->
@@ -46,6 +37,9 @@
       <a iconStart="@tui.contact-round" tuiAsideItem [routerLink]=""
         >Clientes</a
       >
+
+      <a iconStart="@tui.users" tuiAsideItem [routerLink]="['categorias']">Categorías</a>
+
       <!-- <tui-aside-group>
         <button
           automation-id="setting"
@@ -66,7 +60,7 @@
         automation-id="hint"
         iconStart="@tui.heart"
         tuiAsideItem
-        [routerLink]=""
+        [routerLink]="['eventos']"
         >Eventos
       </a>
       <button
@@ -138,8 +132,8 @@
     <div>
       <router-outlet></router-outlet>
     </div>
-    <div
-      *tuiRepeatTimes="let index of 4"
+    <!-- <div
+      *tuiRepeatTimes="let index of 2"
       tuiAppearance="floating"
       tuiCardLarge
       tuiHeader
@@ -148,7 +142,7 @@
         Some random content
         <span tuiSubtitle>A subtitle</span>
       </h2>
-    </div>
+    </div> -->
   </main>
 </div>
 

@@ -17,6 +17,16 @@ export const routes: Routes = [
         path: 'clientes',
         loadChildren: () => import('./features/cliente/cliente.routes').then(r => r.CLIENTE_ROUTES),
         title: 'Clientes'
+      },
+      {
+        path: 'categorias',
+        loadChildren: () => import('./features/categoria/categoria.routes').then(r => r.CATEGORIA_ROUTES),
+        title: 'Categorías'
+      },
+      {
+        path: 'eventos',
+        loadChildren: () => import('./features/evento/evento.routes').then(r => r.EVENTO_ROUTES),
+        title: 'Eventos'
       }
     ]
   },

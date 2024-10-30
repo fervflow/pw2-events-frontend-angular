@@ -28,6 +28,6 @@ import { RouterOutlet } from '@angular/router';
       </ng-container>
     </tui-root>
   `,
-  styles: `@import '@taiga-ui/core/styles/taiga-ui-local.less';`,
+  // styles: [ '@import '@taiga-ui/core/styles/taiga-ui-local.less' ],
 })
 export class AppComponent { }

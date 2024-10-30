@@ -1,0 +1,59 @@
+<div class="container mx-auto p-4 flex flex-col items-center">
+  <div class="w-[32rem]">
+    <h1 class="text-2xl font-bold mb-4">
+      {{ isEditMode ? 'Editar Categoría' : 'Crear Categoría' }}
+    </h1>
+    
+    <form [formGroup]="categoriaForm" (ngSubmit)="onSubmit()" class="max-w-lg">
+      <div class="mb-4">
+        <label class="block text-gray-700 text-sm font-bold mb-2">
+          Nombre
+        </label>
+        <input
+          type="text"
+          formControlName="nombre"
+          class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          [ngClass]="{'border-red-500': isFieldInvalid('nombre')}"
+        >
+        <p *ngIf="isFieldInvalid('nombre')" class="text-red-500 text-xs italic">
+          El nombre es requerido
+        </p>
+      </div>
+      <!-- <div class="mb-4">
+        <label class="block text-gray-700 text-sm font-bold mb-2">
+          Descripción
+        </label>
+        <textarea
+          formControlName="descripcion"
+          rows="3"
+          class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          [ngClass]="{'border-red-500': isFieldInvalid('descripcion')}"
+        ></textarea>
+        <p *ngIf="isFieldInvalid('descripcion')" class="text-red-500 text-xs italic">
+          La descripción es requerida
+        </p>
+      </div> -->
+      <div class="flex items-center justify-between">
+        <button
+          tuiButton
+          size="m"
+          type="submit"
+          [disabled]="categoriaForm.invalid"
+          class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline disabled:opacity-50"
+        >
+          {{ isEditMode ? 'Actualizar' : 'Crear' }}
+        </button>
+        <button
+          tuiButton
+          size="m"
+          appearance="secondary"
+          type="button"
+          (click)="onCancel()"
+          class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+        >
+          Cancelar
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

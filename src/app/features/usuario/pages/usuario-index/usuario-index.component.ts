@@ -4,31 +4,31 @@ import { RouterLink } from '@angular/router';
 import { UsuarioService } from '../../usuario.service';
 import {AsyncPipe, NgForOf} from '@angular/common';
 import {TuiTable} from '@taiga-ui/addon-table';
-import {TuiFormatNumberPipe} from '@taiga-ui/core';
+import {TuiButton, TuiFormatNumberPipe} from '@taiga-ui/core';
+import { Observable } from 'rxjs';
+import { Usuario } from '../../usuario.model';
 
 @Component({
   selector: 'app-usuario-index',
   standalone: true,
-  imports: [CommonModule, RouterLink, AsyncPipe, NgForOf, TuiFormatNumberPipe, TuiTable],
+  imports: [CommonModule, RouterLink, AsyncPipe, NgForOf, TuiFormatNumberPipe, TuiTable, TuiButton],
   templateUrl: './usuario-index.component.html',
   styleUrl: './usuario-index.component.less',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class UsuarioIndexComponent {
-  usuarios: any[] = [];
+  usuarios$!: Observable<Usuario[]>;
 
-  constructor(private usuarioService: UsuarioService) {}
+  constructor(private usuarioService: UsuarioService) {
+    this.loadUsuarios();
+  }
 
   ngOnInit() {
     this.loadUsuarios();
   }
 
   loadUsuarios() {
-    this.usuarioService.getAll()
-      .subscribe(usuarios => {
-        this.usuarios = usuarios as any[];
-        console.log('Usuario-index.ts: ', this.usuarios);
-      });
+    this.usuarios$ = this.usuarioService.getAll();
   }
 
   deleteUsuario(id: string) {

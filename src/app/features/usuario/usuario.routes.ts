@@ -10,15 +10,15 @@ export const USUARIO_ROUTES: Routes = [
   {
     path: 'create',
     loadComponent: () => 
-      import('./pages/usuario-create/usuario-create.component')
-        .then(c => c.UsuarioCreateComponent),
+      import('./pages/usuario-form/usuario-form.component')
+        .then(c => c.UsuarioFormComponent),
     title: 'Crear Usuario'
   },
   {
     path: 'edit/:id',
     loadComponent: () => 
-      import('./pages/usuario-edit/usuario-edit.component')
-        .then(c => c.UsuarioEditComponent),
+      import('./pages/usuario-form/usuario-form.component')
+        .then(c => c.UsuarioFormComponent),
     title: 'Editar Usuario'
   }
 ];

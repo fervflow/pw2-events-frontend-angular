@@ -1,0 +1,110 @@
+<div class="container mx-auto p-4 flex flex-col items-center">
+  <div class="w-[32rem]">
+    <h1 class="text-2xl font-bold mb-4">
+      {{ isEditMode ? 'Editar Evento' : 'Crear Evento' }}
+    </h1>
+    
+    <form [formGroup]="eventoForm" (ngSubmit)="onSubmit()" class="max-w-lg">
+      <div class="mb-4">
+        <label class="block text-gray-700 text-sm font-bold mb-2">
+          Nombre
+        </label>
+        <input
+          type="text"
+          formControlName="nombre"
+          class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          [ngClass]="{'border-red-500': isFieldInvalid('nombre')}"
+        >
+        <p *ngIf="isFieldInvalid('nombre')" class="text-red-500 text-xs italic">
+          El nombre es requerido
+        </p>
+      </div>
+      
+      <div class="mb-4">
+        <label class="block text-gray-700 text-sm font-bold mb-2">
+          Ubicación
+        </label>
+        <input
+          type="text"
+          formControlName="ubicacion"
+          class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          [ngClass]="{'border-red-500': isFieldInvalid('ubicacion')}"
+        >
+        <p *ngIf="isFieldInvalid('ubicacion')" class="text-red-500 text-xs italic">
+          La ubicación es requerida
+        </p>
+      </div>
+      
+      <div class="mb-4">
+        <label class="block text-gray-700 text-sm font-bold mb-2">
+          Fecha y Hora
+        </label>
+        <input
+          type="datetime-local"
+          formControlName="fecha"
+          class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          [ngClass]="{'border-red-500': isFieldInvalid('fecha')}"
+        >
+        <p *ngIf="isFieldInvalid('fecha')" class="text-red-500 text-xs italic">
+          La fecha es requerida
+        </p>
+      </div>
+      
+      <div class="mb-4">
+        <label class="block text-gray-700 text-sm font-bold mb-2">
+          Precio
+        </label>
+        <input
+          type="number"
+          formControlName="precio"
+          min="0"
+          step="0.01"
+          class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          [ngClass]="{'border-red-500': isFieldInvalid('precio')}"
+        >
+        <p *ngIf="isFieldInvalid('precio')" class="text-red-500 text-xs italic">
+          El precio es requerido y debe ser mayor o igual a 0
+        </p>
+      </div>
+      
+      <div class="mb-4">
+        <label class="block text-gray-700 text-sm font-bold mb-2">
+          Categoría
+        </label>
+        <select
+          formControlName="categoriaId"
+          class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          [ngClass]="{'border-red-500': isFieldInvalid('categoriaId')}"
+        >
+          <option value="">Seleccione una categoría</option>
+          <!-- We'll need to add options dynamically from the categories service -->
+        </select>
+        <p *ngIf="isFieldInvalid('categoriaId')" class="text-red-500 text-xs italic">
+          La categoría es requerida
+        </p>
+      </div>
+
+      <div class="flex items-center justify-between">
+        <button
+          tuiButton
+          size="m"
+          type="submit"
+          [disabled]="eventoForm.invalid"
+          class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline disabled:opacity-50"
+        >
+          {{ isEditMode ? 'Actualizar' : 'Crear' }}
+        </button>
+        <button
+          tuiButton
+          size="m"
+          appearance="secondary"
+          type="button"
+          (click)="onCancel()"
+          class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+        >
+          Cancelar
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
