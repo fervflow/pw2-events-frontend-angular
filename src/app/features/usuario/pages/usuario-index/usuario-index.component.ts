@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { Component, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { UsuarioService } from '../../usuario.service';
 import {AsyncPipe, NgForOf} from '@angular/common';
@@ -19,7 +19,10 @@ import { Usuario } from '../../usuario.model';
 export class UsuarioIndexComponent {
   usuarios$!: Observable<Usuario[]>;
 
-  constructor(private usuarioService: UsuarioService) {
+  constructor(
+    private usuarioService: UsuarioService,
+    private cdr: ChangeDetectorRef,
+  ) {
     this.loadUsuarios();
   }
 
@@ -34,7 +37,10 @@ export class UsuarioIndexComponent {
   deleteUsuario(id: string) {
     if (confirm('¿Está seguro de eliminar este usuario?')) {
       this.usuarioService.delete(id)
-        .subscribe(() => this.loadUsuarios());
+        .subscribe(() => {
+          this.loadUsuarios();
+          this.cdr.markForCheck();
+        });
     }
   }
 }

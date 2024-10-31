@@ -76,8 +76,12 @@
           class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
           [ngClass]="{'border-red-500': isFieldInvalid('categoriaId')}"
         >
-          <option value="">Seleccione una categoría</option>
-          <!-- We'll need to add options dynamically from the categories service -->
+          <option value="" disabled required>Seleccione una categoría</option>
+          <!-- @if(categorias$ | async; as categorias) { -->
+            @for(categoria of categorias$ | async; track categoria._id){
+              <option value="{{categoria._id}}">{{categoria.nombre}}</option>
+            }
+          <!-- } -->
         </select>
         <p *ngIf="isFieldInvalid('categoriaId')" class="text-red-500 text-xs italic">
           La categoría es requerida

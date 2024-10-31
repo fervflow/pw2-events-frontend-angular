@@ -1,10 +1,10 @@
 import { Categoria } from "../categoria/categoria.model";
 
-export interface EventoResponse {
+export interface Evento {
   _id: string;
   nombre: string;
   ubicacion: string;
-  fecha: string;  // or Date if you prefer to handle conversion
+  fecha: string;
   precio: number;
   categoria: Categoria;
 }

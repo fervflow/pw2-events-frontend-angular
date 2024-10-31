@@ -3,10 +3,12 @@ import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { switchMap } from 'rxjs/operators';
-import { of } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { EventoService } from '../../evento.service';
-import { EventoRequest, EventoResponse } from '../../evento.model';
+import { EventoRequest, Evento } from '../../evento.model';
 import { TuiButton } from '@taiga-ui/core';
+import { Categoria } from '../../../categoria/categoria.model';
+import { CategoriaService } from '../../../categoria/categoria.service';
 
 @Component({
   selector: 'app-evento-form',
@@ -19,14 +21,17 @@ export class EventoFormComponent {
   eventoForm!: FormGroup;
   isEditMode = false;
   eventoId: string | null = null;
+  categorias$!: Observable<Categoria[]>;
 
   constructor(
     private fb: FormBuilder,
     private eventoService: EventoService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private categoriaService: CategoriaService,
   ) {
     this.createForm();
+    this.categorias$ = this.categoriaService.getAll();
   }
 
   ngOnInit() {
@@ -44,7 +49,7 @@ export class EventoFormComponent {
         // Format date for input[type="datetime-local"]
         const fecha = new Date(evento.fecha)
           .toISOString()
-          .slice(0, 16); // Get YYYY-MM-DDTHH:mm format
+          .slice(0, 16); // YYYY-MM-DDTHH:mm format
 
         this.eventoForm.patchValue({
           nombre: evento.nombre,
@@ -76,7 +81,8 @@ export class EventoFormComponent {
     if (this.eventoForm.valid) {
       const eventoData: EventoRequest = {
         ...this.eventoForm.value,
-        fecha: new Date(this.eventoForm.value.fecha).toISOString()
+        fecha: new Date(this.eventoForm.value.fecha).toISOString(),
+        
       };
       
       const request = this.isEditMode && this.eventoId

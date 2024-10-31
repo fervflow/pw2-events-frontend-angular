@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { EventoResponse, EventoRequest } from './evento.model';
+import { Observable, tap } from 'rxjs';
+import { Evento, EventoRequest } from './evento.model';
 
 @Injectable({
   providedIn: 'root'
@@ -11,23 +11,33 @@ export class EventoService {
 
   constructor(private http: HttpClient) {}
 
-  getAll(): Observable<EventoResponse[]> {
-    return this.http.get<EventoResponse[]>(this.API_URL);
+  getAll(): Observable<Evento[]> {
+    return this.http.get<Evento[]>(this.API_URL).pipe(
+      tap(eventos => console.log('Eventos:', eventos))
+    );
   }
 
-  getById(id: string): Observable<EventoResponse> {
-    return this.http.get<EventoResponse>(`${this.API_URL}/${id}`);
+  getById(id: string): Observable<Evento> {
+    return this.http.get<Evento>(`${this.API_URL}/${id}`).pipe(
+      tap(evento => console.log('Evento:', evento))
+    );
   }
 
-  create(evento: EventoRequest): Observable<EventoResponse> {
-    return this.http.post<EventoResponse>(this.API_URL, evento);
+  create(evento: EventoRequest): Observable<Evento> {
+    return this.http.post<Evento>(this.API_URL, evento).pipe(
+      tap(evento => console.log('Evento:', evento))
+    );
   }
 
-  update(id: string, evento: EventoRequest): Observable<EventoResponse> {
-    return this.http.patch<EventoResponse>(`${this.API_URL}/${id}`, evento);
+  update(id: string, evento: EventoRequest): Observable<Evento> {
+    return this.http.patch<Evento>(`${this.API_URL}/${id}`, evento).pipe(
+      tap(evento => console.log('Evento:', evento))
+    );
   }
 
   delete(id: string): Observable<void> {
-    return this.http.delete<void>(`${this.API_URL}/${id}`);
+    return this.http.delete<void>(`${this.API_URL}/${id}`).pipe(
+      tap(evento => console.log('Evento:', evento))
+    );
   }
 }

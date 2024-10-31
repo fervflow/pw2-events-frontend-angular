@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, signal } from '@angular/core';
 import { Router } from '@angular/router';
-import { BehaviorSubject, Observable, tap } from 'rxjs';
+import { tap } from 'rxjs';
 import { toObservable } from '@angular/core/rxjs-interop';
 import { TokenService } from './token.service';
 
@@ -16,7 +16,6 @@ export class AuthService {
   constructor(
     private http: HttpClient,
     private router: Router,
-    // private storage: BrowserStorageService
     private tokenService: TokenService,
   ) {
     this.isAuthenticatedSignal.set(!!tokenService.getToken());

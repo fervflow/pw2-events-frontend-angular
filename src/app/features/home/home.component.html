@@ -5,7 +5,7 @@
       [style.height.px]="32"
       [style.width.px]="32"
     />
-    <h2>Marketing: Administración de Eventos</h2>
+    <h2 [style.font-size]="'larger'">Marketing: Administración de Eventos</h2>
   </span>
 
   <hr />
@@ -32,13 +32,13 @@
       </button>
     </header>
     <div>
-      <a iconStart="@tui.users" tuiAsideItem [routerLink]="['usuarios']">Usuarios</a>
+      <a iconStart="@tui.contact-round" tuiAsideItem [routerLink]="['usuarios']">Usuarios</a>
 
-      <a iconStart="@tui.contact-round" tuiAsideItem [routerLink]=""
+      <a iconStart="@tui.users" tuiAsideItem [routerLink]="['clientes']"
         >Clientes</a
       >
 
-      <a iconStart="@tui.users" tuiAsideItem [routerLink]="['categorias']">Categorías</a>
+      <a iconStart="@tui.shapes" tuiAsideItem [routerLink]="['categorias']">Categorías</a>
 
       <!-- <tui-aside-group>
         <button
@@ -63,6 +63,9 @@
         [routerLink]="['eventos']"
         >Eventos
       </a>
+
+      <a iconStart="@tui.notebook-text" tuiAsideItem [routerLink]="['publicaciones']">Publicaciones</a>
+
       <button
         iconEnd="@tui.chevron-right"
         iconStart="@tui.ellipsis"
@@ -145,7 +148,3 @@
     </div> -->
   </main>
 </div>
-
-<!-- <main class="container mx-auto p-4">
-  <router-outlet></router-outlet>
-</main> -->

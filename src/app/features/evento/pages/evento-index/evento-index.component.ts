@@ -1,12 +1,12 @@
 import { CommonModule } from '@angular/common';
-import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { Component, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { EventoService } from '../../evento.service';
 import { AsyncPipe, NgForOf } from '@angular/common';
 import { TuiTable } from '@taiga-ui/addon-table';
 import { TuiButton, TuiFormatNumberPipe } from '@taiga-ui/core';
 import { Observable } from 'rxjs';
-import { EventoResponse } from '../../evento.model';
+import { Evento } from '../../evento.model';
 
 @Component({
   selector: 'app-evento-index',
@@ -17,9 +17,12 @@ import { EventoResponse } from '../../evento.model';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class EventoIndexComponent {
-  eventos$!: Observable<EventoResponse[]>;
+  eventos$!: Observable<Evento[]>;
 
-  constructor(private eventoService: EventoService) {
+  constructor(
+    private eventoService: EventoService,
+    private cdr: ChangeDetectorRef,
+  ) {
     this.loadEventos();
   }
 
@@ -29,13 +32,15 @@ export class EventoIndexComponent {
 
   loadEventos() {
     this.eventos$ = this.eventoService.getAll();
-    console.log('eventos loaded:', this.eventos$);
   }
 
   deleteEvento(id: string) {
     if (confirm('¿Está seguro de eliminar este evento?')) {
       this.eventoService.delete(id)
-        .subscribe(() => this.loadEventos());
+        .subscribe(() => {
+          this.loadEventos();
+          this.cdr.markForCheck();
+        });
     }
   }
 

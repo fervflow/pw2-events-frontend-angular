@@ -1,0 +1,91 @@
+<div class="container mx-auto p-4 flex flex-col items-center">
+  <div class="w-[32rem]">
+    <h1 class="text-2xl font-bold mb-4">
+      {{ isEditMode ? 'Editar Usuario' : 'Crear Usuario' }}
+    </h1>
+    
+    <form [formGroup]="clienteForm" (ngSubmit)="onSubmit()" class="max-w-lg">
+      <div class="mb-4">
+        <label class="block text-gray-700 text-sm font-bold mb-2">
+          Nombres
+        </label>
+        <input
+          type="text"
+          formControlName="nombres"
+          class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          [ngClass]="{'border-red-500': isFieldInvalid('nombres')}"
+        >
+        <p *ngIf="isFieldInvalid('nombres')" class="text-red-500 text-xs italic">
+          El nombre es requerido
+        </p>
+      </div>
+
+      <div class="mb-4">
+        <label class="block text-gray-700 text-sm font-bold mb-2">
+          Apellidos
+        </label>
+        <input
+          type="text"
+          formControlName="apellidos"
+          class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          [ngClass]="{'border-red-500': isFieldInvalid('apellidos')}"
+        >
+        <p *ngIf="isFieldInvalid('apellido')" class="text-red-500 text-xs italic">
+          El apellido es requerido
+        </p>
+      </div>
+
+      <div class="mb-4">
+        <label class="block text-gray-700 text-sm font-bold mb-2">
+          Teléfono
+        </label>
+        <input
+          type="tel"
+          formControlName="telefono"
+          class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          [ngClass]="{'border-red-500': isFieldInvalid('telefono')}"
+        >
+        <p *ngIf="isFieldInvalid('telefono')" class="text-red-500 text-xs italic">
+          El teléfono es requerido
+        </p>
+      </div>
+
+      <div class="mb-4">
+        <label class="block text-gray-700 text-sm font-bold mb-2">
+          Email
+        </label>
+        <input
+          type="email"
+          formControlName="email"
+          class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          [ngClass]="{'border-red-500': isFieldInvalid('email')}"
+        >
+        <p *ngIf="isFieldInvalid('email')" class="text-red-500 text-xs italic">
+          Email inválido
+        </p>
+      </div>
+
+      <div class="flex items-center justify-between">
+        <button
+          tuiButton
+          size="m"
+          type="submit"
+          [disabled]="clienteForm.invalid"
+          class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline disabled:opacity-50"
+        >
+          {{ isEditMode ? 'Actualizar' : 'Registrar' }}
+        </button>
+        <button
+          tuiButton
+          size="m"
+          appearance="secondary"
+          type="button"
+          (click)="onCancel()"
+          class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+        >
+          Cancelar
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

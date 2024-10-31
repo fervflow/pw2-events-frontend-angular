@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { Component, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { CategoriaService } from '../../categoria.service';
 import { AsyncPipe } from '@angular/common';
@@ -19,7 +19,10 @@ import { Categoria } from '../../categoria.model';
 export class CategoriaIndexComponent {
   categorias$!: Observable<Categoria[]>;
 
-  constructor(private categoriaService: CategoriaService) {
+  constructor(
+    private categoriaService: CategoriaService,
+    private cdr: ChangeDetectorRef,
+  ) {
     this.loadCategorias();
   }
 
@@ -34,7 +37,10 @@ export class CategoriaIndexComponent {
   deleteCategoria(id: string) {
     if (confirm('¿Está seguro de eliminar esta categoría?')) {
       this.categoriaService.delete(id)
-        .subscribe(() => this.loadCategorias());
+        .subscribe(() => {
+          this.loadCategorias();
+          this.cdr.markForCheck();
+        });
     }
   }
 }
