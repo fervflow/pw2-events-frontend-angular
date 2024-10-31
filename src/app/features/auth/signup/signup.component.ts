@@ -5,14 +5,14 @@ import { Router, RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 
 @Component({
-  selector: 'app-login',
+  selector: 'app-signup',
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule, RouterLink],
-  templateUrl: './login.component.html',
-  styleUrl: './login.component.less'
+  templateUrl: './signup.component.html',
+  styleUrls: ['./signup.component.less']
 })
-export class LoginComponent {
-  loginForm: FormGroup;
+export class SignupComponent {
+  signupForm: FormGroup;
   isLoading = false;
   errorMessage = '';
 
@@ -21,40 +21,41 @@ export class LoginComponent {
     private authService: AuthService,
     private router: Router,
   ) {
-    this.loginForm = this.fb.group({
+    this.signupForm = this.fb.group({
+      nombre: ['', Validators.required, Validators.minLength(3), Validators.maxLength(40)],
       email: ['', [Validators.required, Validators.email]],
-      password: ['', Validators.required]
+      password: ['', Validators.required, Validators.minLength(6), Validators.maxLength(20)]
     });
   }
 
   showError(field: string): boolean {
-    const control = this.loginForm.get(field);
+    const control = this.signupForm.get(field);
     return control ? (control.invalid && (control.dirty || control.touched)) : false;
   }
 
-  login(): void {
-    if (this.loginForm.valid) {
+  signup(): void {
+    if (this.signupForm.valid) {
       this.isLoading = true;
       this.errorMessage = '';
 
-      this.authService.login(
-        this.loginForm.value.email,
-        this.loginForm.value.password
-      ).subscribe({
+      const usuario = this.signupForm.value;
+
+      this.authService.signup(usuario).subscribe({
         next: () => {
-          this.router.navigate(['/']);
+          alert('Registro exitoso. Puedes iniciar sesión ahora.');
+          this.router.navigate(['/login']);
         },
         error: (error) => {
           this.isLoading = false;
-          this.errorMessage = error.error?.message || 'Error al iniciar sesión';
+          this.errorMessage = error.error?.message || 'Error al registrarse';
         },
         complete: () => {
           this.isLoading = false;
         }
       });
     } else {
-      Object.keys(this.loginForm.controls).forEach(key => {
-        const control = this.loginForm.get(key);
+      Object.keys(this.signupForm.controls).forEach(key => {
+        const control = this.signupForm.get(key);
         if (control?.invalid) {
           control.markAsTouched();
         }

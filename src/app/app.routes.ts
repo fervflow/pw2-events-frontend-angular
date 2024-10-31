@@ -32,13 +32,23 @@ export const routes: Routes = [
         path: 'publicaciones',
         loadChildren: () => import('./features/publicacion/publicacion.routes').then(r => r.PUBLICACION_ROUTES),
         title: 'Publicaciones'
-      }
+      },
+      {
+        path: 'ventas',
+        loadChildren: () => import('./features/venta/venta.routes').then(r => r.VENTA_ROUTES),
+        title: 'Ventas de Tickets'
+      },
     ]
   },
   {
     path: 'login',
     loadComponent: () => import('./features/auth/login/login.component').then(c => c.LoginComponent),
     title: 'Iniciar Sesión'
+  },
+  {
+    path: 'signup',
+    loadComponent: () => import('./features/auth/signup/signup.component').then(c => c.SignupComponent),
+    title: 'Registrarse'
   },
   {
     path: '**',

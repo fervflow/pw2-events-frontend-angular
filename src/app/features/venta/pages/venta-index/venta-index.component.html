@@ -1,0 +1,78 @@
+@if (ventas$ | async; as ventas) {
+  <div class="container mx-auto p-4 max-w-7xl">
+    <div class="flex justify-end items-center mb-[-4rem]">
+      <button
+        tuiButton
+        size="m"
+        iconStart="@tui.plus"
+        routerLink="create"
+        class="bg-blue-500 text-white px-4 py-2 rounded -translate-y-16 z-10">
+        Nueva Venta
+      </button>
+    </div>
+    
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">
+      @for(venta of ventas; track venta._id) {
+        <div class="bg-white rounded-lg shadow-md overflow-hidden border border-gray-200">
+          <!-- Header -->
+          <div class="bg-gray-800 text-white p-4">
+            <div class="text-sm">Ticket #{{venta._id!.slice(-6).toUpperCase()}}</div>
+            <div class="text-xs">{{venta.fecha_venta | date:'medium'}}</div>
+          </div>
+          
+          <!-- Event -->
+          <div class="p-4 bg-blue-50">
+            <h3 class="font-bold text-lg text-blue-800">{{venta.evento.nombre}}</h3>
+            <div class="text-sm text-gray-600">
+              <div>{{venta.evento.fecha | date:'medium'}}</div>
+              <div>{{venta.evento.ubicacion}}</div>
+              <div class="font-semibold text-xl">Bs. {{venta.evento.precio}}</div>
+            </div>
+          </div>
+          
+          <!-- Customer -->
+          <div class="p-4 border-t border-gray-200">
+            <h4 class="font-semibold text-gray-700 mb-2">Cliente</h4>
+            <div class="text-sm text-gray-600">
+              <div>{{venta.cliente.nombres}} {{venta.cliente.apellidos}}</div>
+              <div>{{venta.cliente.email ?? "-"}}</div>
+              <div>{{venta.cliente.telefono}}</div>
+            </div>
+          </div>
+          
+          <!-- Seller -->
+          <div class="p-4 bg-gray-50 border-t border-gray-200">
+            <h4 class="font-semibold text-gray-700 mb-2">Vendedor</h4>
+            <div class="text-sm text-gray-600">
+              <div>{{venta.usuario.nombre}}</div>
+              <div>{{venta.usuario.email}}</div>
+            </div>
+          </div>
+          
+          <!-- Actions -->
+          <div class="p-4 bg-gray-100 border-t border-gray-200 flex justify-end space-x-2">
+            <button 
+              tuiButton
+              iconStart="@tui.pencil"
+              size="s"
+              [routerLink]="['edit', venta._id]"
+              class="bg-blue-500 text-white px-3 py-1 rounded">
+              Editar
+            </button>
+            <button
+              tuiButton
+              iconStart="@tui.trash-2"
+              appearance="secondary-destructive"
+              size="s"
+              (click)="deleteVenta(venta._id!)"
+              class="bg-red-500 text-white px-3 py-1 rounded">
+              Eliminar
+            </button>
+          </div>
+        </div>
+      }
+    </div>
+  </div>
+} @else {
+  <div class="font-bold text-2xl text-center">Cargando ventas...</div>
+}

@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { tap } from 'rxjs';
 import { toObservable } from '@angular/core/rxjs-interop';
 import { TokenService } from './token.service';
+import { Usuario } from '../features/usuario/usuario.model';
 
 @Injectable({
   providedIn: 'root'
@@ -23,6 +24,10 @@ export class AuthService {
 
   isAuthenticated(): boolean {
     return this.isAuthenticatedSignal();
+  }
+
+  signup(usuario: Usuario) {
+    return this.http.post<Usuario>(`${this.API_URL}/signup`, usuario);
   }
 
   login(email: string, password: string) {

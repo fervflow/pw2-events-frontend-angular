@@ -26,10 +26,6 @@ export class CategoriaIndexComponent {
     this.loadCategorias();
   }
 
-  ngOnInit() {
-    this.loadCategorias();
-  }
-
   loadCategorias() {
     this.categorias$ = this.categoriaService.getAll();
   }

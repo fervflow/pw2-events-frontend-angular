@@ -10,12 +10,17 @@
 
   <hr />
 
-  <button iconStart="@tui.bell" tuiIconButton type="button">
-    Notifications
-    <tui-badge-notification />
-  </button>
-  <button iconStart="@tui.ellipsis" tuiIconButton type="button">More</button>
   <tui-avatar src="EV" />
+  
+  <button
+      appearance="secondary-grayscale"
+      iconStart="@tui.log-out"
+      tuiButton
+      type="button"
+      (click)="logout()"
+  >
+      Cerrar Sesión
+  </button>
 </header>
 
 <!-- [style.height]="'95dvh'" -->
@@ -32,77 +37,19 @@
       </button>
     </header>
     <div>
-      <a iconStart="@tui.contact-round" tuiAsideItem [routerLink]="['usuarios']">Usuarios</a>
-
-      <a iconStart="@tui.users" tuiAsideItem [routerLink]="['clientes']"
-        >Clientes</a
-      >
-
-      <a iconStart="@tui.shapes" tuiAsideItem [routerLink]="['categorias']">Categorías</a>
-
-      <!-- <tui-aside-group>
-        <button
-          automation-id="setting"
-          iconStart="@tui.settings"
-          tuiAsideItem
-          tuiChevron
-          type="button"
-        >
-          Settings
-          <ng-template>
-            <button tuiAsideItem type="button">Account</button>
-            <button tuiAsideItem type="button">Notifications</button>
-            <button tuiAsideItem type="button">Privacy</button>
-          </ng-template>
-        </button>
-      </tui-aside-group> -->
-      <a
-        automation-id="hint"
-        iconStart="@tui.heart"
+      <a 
+        *ngFor="let item of sidebarItems"
         tuiAsideItem
-        [routerLink]="['eventos']"
-        >Eventos
+        [routerLink]="[item.route]"
+        iconStart="{{item.icon}}"
+        (click)="handleSidebarClick(item)"
+      >
+        <span>{{ item.label }}</span>
       </a>
 
-      <a iconStart="@tui.notebook-text" tuiAsideItem [routerLink]="['publicaciones']">Publicaciones</a>
-
-      <button
-        iconEnd="@tui.chevron-right"
-        iconStart="@tui.ellipsis"
-        tuiAsideItem
-        tuiDropdownHover
-        tuiDropdownOpen
-        type="button"
-        [tuiDropdown]="more"
-      >
-        More
-        <ng-template #more let-close>
-          <tui-data-list tuiDataListDropdownManager>
-            <button iconStart="@tui.pencil" tuiAsideItem type="button">
-              Write
-            </button>
-            <button
-              iconStart="@tui.pie-chart"
-              tuiAsideItem
-              type="button"
-              [tuiDropdown]="submenu"
-            >
-              Categories
-              <ng-template #submenu>
-                <tui-data-list>
-                  <button tuiAsideItem type="button" (click)="close()">
-                    Fiction (will close menu)
-                  </button>
-                  <button tuiAsideItem type="button">Non-Fiction</button>
-                  <button tuiAsideItem type="button">Children</button>
-                </tui-data-list>
-              </ng-template>
-            </button>
-          </tui-data-list>
-        </ng-template>
-      </button>
       <hr />
-      <button iconStart="@tui.plus" tuiAsideItem type="button">Add</button>
+      <button iconStart="@tui.plus" tuiAsideItem type="button"></button>
+
     </div>
   </aside>
 
@@ -112,39 +59,28 @@
     [style.flex-direction]="'column'"
     [style.justify-content]="'start'"
   >
-    <nav tuiNavigationNav [style.position]="'sticky'" [style.height.rem]="3">
-      <tui-badge
-        iconStart="@tui.users"
+    <nav tuiNavigationNav [style.position]="'sticky'" [style.height.rem]="3.5">
+      <tui-badge 
+        ngIf="selectedSidebarItem"
+        [iconStart]="selectedSidebarItem ? selectedSidebarItem.icon : ''"
         appearance="primary"
         size="xl"
       ></tui-badge>
       <span tuiNavigationLogo>
-        <span tuiFade>Usuarios</span>
+        <span tuiFade>{{ selectedSidebarItem ? selectedSidebarItem.label : 'HOME PAGE' }}</span>
       </span>
 
       <hr />
 
-      <tui-tabs tuiFade>
-        <button tuiTab type="button">Default view</button>
-        <button tuiTab type="button">Details</button>
-        <button tuiTab type="button">Followers</button>
-      </tui-tabs>
-      <button appearance="secondary" tuiButton type="button" (click)="logout()">Log Out</button>
-      <button tuiButton type="button">Primary</button>
+      <!-- <button tuiButton type="button">Primary</button> -->
     </nav>
+
     <div>
+      <!-- <router-outlet 
+        (activate)="updateNavButton($event.navButtonInfo?.emit({ label: $event.buttonLabel, route: $event.buttonRoute }))"
+      ></router-outlet> -->
       <router-outlet></router-outlet>
     </div>
-    <!-- <div
-      *tuiRepeatTimes="let index of 2"
-      tuiAppearance="floating"
-      tuiCardLarge
-      tuiHeader
-    >
-      <h2 tuiTitle>
-        Some random content
-        <span tuiSubtitle>A subtitle</span>
-      </h2>
-    </div> -->
+
   </main>
 </div>

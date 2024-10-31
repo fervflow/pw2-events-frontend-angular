@@ -1,0 +1,92 @@
+<div class="container mx-auto p-4 flex flex-col items-center">
+  <div class="w-[32rem]">
+    <h1 class="text-2xl font-bold mb-4">
+      {{ isEditMode ? 'Editar Venta' : 'Registrar Nueva Venta' }}
+    </h1>
+    
+    <form [formGroup]="ventaForm" (ngSubmit)="onSubmit()" class="max-w-lg">
+      <div class="mb-4">
+        <label class="block text-gray-700 text-sm font-bold mb-2">
+          Evento
+        </label>
+        <select
+          formControlName="eventoId"
+          class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          [ngClass]="{'border-red-500': isFieldInvalid('eventoId')}"
+        >
+          <option value="">Seleccione un evento</option>
+          @for(evento of eventos$ | async; track evento._id) {
+            <option [value]="evento._id">
+              {{evento.nombre}} - {{evento.fecha | date:'short'}} - Bs. {{evento.precio}}
+            </option>
+          }
+        </select>
+        <p *ngIf="isFieldInvalid('eventoId')" class="text-red-500 text-xs italic">
+          Debe seleccionar un evento
+        </p>
+      </div>
+
+      <div class="mb-4">
+        <label class="block text-gray-700 text-sm font-bold mb-2">
+          Cliente
+        </label>
+        <select
+          formControlName="clienteId"
+          class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          [ngClass]="{'border-red-500': isFieldInvalid('clienteId')}"
+        >
+          <option value="">Seleccione un cliente</option>
+          @for(cliente of clientes$ | async; track cliente._id) {
+            <option [value]="cliente._id">
+              {{cliente.nombres}} {{cliente.apellidos}} - {{cliente.email}}
+            </option>
+          }
+        </select>
+        <p *ngIf="isFieldInvalid('clienteId')" class="text-red-500 text-xs italic">
+          Debe seleccionar un cliente
+        </p>
+      </div>
+
+      <div class="mb-4">
+        <label class="block text-gray-700 text-sm font-bold mb-2">
+          Vendedor
+        </label>
+        <select
+          formControlName="usuarioId"
+          class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          [ngClass]="{'border-red-500': isFieldInvalid('usuarioId')}"
+        >
+          <option value="">Seleccione un vendedor</option>
+          @for(usuario of usuarios$ | async; track usuario._id) {
+            <option [value]="usuario._id">{{usuario.nombre}} - {{usuario.email}}</option>
+          }
+        </select>
+        <p *ngIf="isFieldInvalid('usuarioId')" class="text-red-500 text-xs italic">
+          Debe seleccionar un vendedor
+        </p>
+      </div>
+
+      <div class="flex items-center justify-between">
+        <button
+          tuiButton
+          size="m"
+          type="submit"
+          [disabled]="ventaForm.invalid"
+          class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline disabled:opacity-50"
+        >
+          {{ isEditMode ? 'Actualizar' : 'Registrar' }}
+        </button>
+        <button
+          tuiButton
+          size="m"
+          appearance="secondary"
+          type="button"
+          (click)="onCancel()"
+          class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+        >
+          Cancelar
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

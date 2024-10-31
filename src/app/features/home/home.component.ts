@@ -28,6 +28,12 @@ import {
 import {TuiCardLarge, TuiHeader, TuiNavigation} from '@taiga-ui/layout';	 
 import { AuthService } from '../../auth/auth.service';
 
+interface SidebarItem {
+  icon: string;
+  label: string;
+  route: string;
+}
+
 @Component({
   selector: 'app-home',
   standalone: true,
@@ -70,7 +76,22 @@ export class HomeComponent {
   protected expanded = true;
   protected open = false;
   protected switch = false;
-  // protected readonly routes = DemoRoute;
+  
+  selectedSidebarItem: SidebarItem | null = null;
+
+  sidebarItems: SidebarItem[] = [
+    { icon: '@tui.contact-round', label: 'Usuarios', route: 'usuarios' },
+    { icon: '@tui.users', label: 'Clientes', route: 'clientes' },
+    { icon: '@tui.shapes', label: 'Categorías', route: 'categorias' },
+    { icon: '@tui.calendar-1', label: 'Eventos', route: 'eventos' },
+    { icon: '@tui.notebook-text', label: 'Publicaciones', route: 'publicaciones' },
+    { icon: '@tui.ticket', label: 'Ventas', route: 'ventas' },
+  ];
+
+  handleSidebarClick(item: SidebarItem) {
+    this.selectedSidebarItem = item;
+  }
+
   auth = inject(AuthService);
   logout = () => {
     this.auth.logout();
